@@ -5,11 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.natthaparkc.googleio.MainNavigationFragment
 
 import com.example.natthaparkc.googleio.R
+import com.example.natthaparkc.googleio.util.activityViewModelProvider
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : DaggerFragment() {
+
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var scheduleViewModel: ScheduleViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,17 +26,12 @@ class ScheduleFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        scheduleViewModel = activityViewModelProvider(viewModelFactory)
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_schedule, container, false)
     }
 
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                ScheduleFragment().apply {
-                    arguments = Bundle().apply {
-                    }
-                }
-    }
 }
